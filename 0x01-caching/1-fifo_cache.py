@@ -7,6 +7,7 @@ Use FIFO caching
 from base_caching import BaseCaching
 from collections import deque
 
+
 class FIFOCache(BaseCaching):
     """FIFO cache class"""
 
@@ -28,5 +29,6 @@ class FIFOCache(BaseCaching):
 
     def get(self, key):
         """getting the items of cache"""
-        if key is not None or key not in self.cache_data:
+        if key and key in self.cache_data:
             return self.cache_data[key]
+        return None
