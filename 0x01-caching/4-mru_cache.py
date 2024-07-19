@@ -17,12 +17,14 @@ class MRUCache(BaseCaching):
         """Adding item to the cache"""
         if key is not None and item is not None:
             self.cache_data[key] = item
-            if key in self.queue:
-                self.queue.remove(key)
-            self.queue.append(key)
+            if key not in self.queue:
+                self.queue.append(key)
+            else:
+                self.queue.append(
+                    self.queue.pop(self.queue.index(key)))
 
             if len(self.queue) > BaseCaching.MAX_ITEMS:
-                removed_key = self.queue.pop()
+                removed_key = self.queue.pop(-2)
                 del self.cache_data[removed_key]
                 print("DISCARD: {}".format(removed_key))
 
@@ -30,4 +32,5 @@ class MRUCache(BaseCaching):
         """Get an item by key"""
         if key is None or key not in self.cache_data:
             return None
-        return self.cache_data.get(key)
+        self.queue.append(self.queue.pop(self.queue.index(key)))
+        return self.cache_data(key)
