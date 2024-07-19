@@ -12,6 +12,7 @@ class MRUCache(BaseCaching):
     """
     MRUCache class
     """
+
     def __init__(self):
         """Constructor"""
         super().__init__()
@@ -31,7 +32,7 @@ class MRUCache(BaseCaching):
                 self.queue.append(key)
             else:
                 self.queue.append(
-                        self.queue.pop(self.queue.index(key)))
+                    self.queue.pop(self.queue.index(key)))
             if len(self.queue) > BaseCaching.MAX_ITEMS:
                 removed = self.queue.pop(-2)
                 del self.cache_data[removed]
